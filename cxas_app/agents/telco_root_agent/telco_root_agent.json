@@ -1,0 +1,35 @@
+{
+    "name": "telco_root_agent",
+    "displayName": "telco_root_agent",
+    "instruction": "agents/telco_root_agent/instruction.txt",
+    "tools": [
+        "fetch_customer_profile",
+        "evaluate_routing_rules",
+        "execute_live_agent_handover",
+        "end_session"
+    ],
+    "childAgents": [
+        "auth_agent",
+        "billing_agent",
+        "tech_support_agent",
+        "sales_agent",
+        "appointment_agent",
+        "account_agent",
+        "secondary_language_agent"
+    ],
+    "beforeModelCallbacks": [
+        {
+            "pythonCode": "agents/telco_root_agent/before_model_callbacks/before_model_callbacks_01/python_code.py"
+        }
+    ],
+    "afterModelCallbacks": [
+        {
+            "pythonCode": "agents/telco_root_agent/after_model_callbacks/after_model_callbacks_01/python_code.py"
+        }
+    ],
+    "beforeAgentCallbacks": [
+        {
+            "pythonCode": "agents/telco_root_agent/before_agent_callbacks/before_agent_callbacks_01/python_code.py"
+        }
+    ]
+}

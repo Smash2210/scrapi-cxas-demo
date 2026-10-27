@@ -1,0 +1,10 @@
+{
+    "name": "fetch_customer_profile",
+    "displayName": "fetch_customer_profile",
+    "pythonFunction": {
+        "name": "fetch_customer_profile",
+        "pythonCode": "tools/fetch_customer_profile/python_function/python_code.py",
+        "description": "Resolves customer identity and account profile from the telephony caller ID (CLID). Returns identification status, customer type, business flag, billing account, and region."
+    },
+    "executionType": "SYNCHRONOUS"
+}

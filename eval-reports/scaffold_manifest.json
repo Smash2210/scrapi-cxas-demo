@@ -1,0 +1,333 @@
+{
+  "status": "complete",
+  "summary": "Successfully scaffolded Telco Voice Central: 64 files across 8 agents, 15 tools, 17 callbacks, and app.json with 61 variable declarations. All static lint checks passed with zero errors and zero warnings.",
+  "agents_count": 8,
+  "tools_count": 15,
+  "callbacks_count": 17,
+  "variables_count": 61,
+  "files_written": [
+    {
+      "path": "cxas_app/app.json",
+      "type": "app_config",
+      "size_bytes": 11187
+    },
+    {
+      "path": "cxas_app/tools/execute_live_agent_handover/execute_live_agent_handover.json",
+      "type": "tool_config",
+      "size_bytes": 433
+    },
+    {
+      "path": "cxas_app/tools/execute_live_agent_handover/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1597
+    },
+    {
+      "path": "cxas_app/tools/start_virtual_repair/start_virtual_repair.json",
+      "type": "tool_config",
+      "size_bytes": 406
+    },
+    {
+      "path": "cxas_app/tools/start_virtual_repair/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1332
+    },
+    {
+      "path": "cxas_app/tools/fetch_recent_bills/fetch_recent_bills.json",
+      "type": "tool_config",
+      "size_bytes": 390
+    },
+    {
+      "path": "cxas_app/tools/fetch_recent_bills/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1641
+    },
+    {
+      "path": "cxas_app/tools/send_password_reset_sms/send_password_reset_sms.json",
+      "type": "tool_config",
+      "size_bytes": 426
+    },
+    {
+      "path": "cxas_app/tools/send_password_reset_sms/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1196
+    },
+    {
+      "path": "cxas_app/tools/send_authentication_otp/send_authentication_otp.json",
+      "type": "tool_config",
+      "size_bytes": 401
+    },
+    {
+      "path": "cxas_app/tools/send_authentication_otp/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1186
+    },
+    {
+      "path": "cxas_app/tools/fetch_plan_catalog/fetch_plan_catalog.json",
+      "type": "tool_config",
+      "size_bytes": 387
+    },
+    {
+      "path": "cxas_app/tools/fetch_plan_catalog/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1695
+    },
+    {
+      "path": "cxas_app/tools/fetch_availability_slots/fetch_availability_slots.json",
+      "type": "tool_config",
+      "size_bytes": 429
+    },
+    {
+      "path": "cxas_app/tools/fetch_availability_slots/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1499
+    },
+    {
+      "path": "cxas_app/tools/create_dispute_ticket/create_dispute_ticket.json",
+      "type": "tool_config",
+      "size_bytes": 402
+    },
+    {
+      "path": "cxas_app/tools/create_dispute_ticket/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1242
+    },
+    {
+      "path": "cxas_app/tools/validate_authentication_pin/validate_authentication_pin.json",
+      "type": "tool_config",
+      "size_bytes": 416
+    },
+    {
+      "path": "cxas_app/tools/validate_authentication_pin/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 2270
+    },
+    {
+      "path": "cxas_app/tools/commit_appointment_reschedule/commit_appointment_reschedule.json",
+      "type": "tool_config",
+      "size_bytes": 428
+    },
+    {
+      "path": "cxas_app/tools/commit_appointment_reschedule/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1261
+    },
+    {
+      "path": "cxas_app/tools/fetch_customer_profile/fetch_customer_profile.json",
+      "type": "tool_config",
+      "size_bytes": 479
+    },
+    {
+      "path": "cxas_app/tools/fetch_customer_profile/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 5154
+    },
+    {
+      "path": "cxas_app/tools/check_regional_outage/check_regional_outage.json",
+      "type": "tool_config",
+      "size_bytes": 405
+    },
+    {
+      "path": "cxas_app/tools/check_regional_outage/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1452
+    },
+    {
+      "path": "cxas_app/tools/evaluate_routing_rules/evaluate_routing_rules.json",
+      "type": "tool_config",
+      "size_bytes": 411
+    },
+    {
+      "path": "cxas_app/tools/evaluate_routing_rules/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 2188
+    },
+    {
+      "path": "cxas_app/tools/execute_suspend_restore/execute_suspend_restore.json",
+      "type": "tool_config",
+      "size_bytes": 399
+    },
+    {
+      "path": "cxas_app/tools/execute_suspend_restore/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 1291
+    },
+    {
+      "path": "cxas_app/tools/validate_authentication_otp/validate_authentication_otp.json",
+      "type": "tool_config",
+      "size_bytes": 424
+    },
+    {
+      "path": "cxas_app/tools/validate_authentication_otp/python_function/python_code.py",
+      "type": "tool_function",
+      "size_bytes": 2285
+    },
+    {
+      "path": "cxas_app/agents/appointment_agent/appointment_agent.json",
+      "type": "agent_config",
+      "size_bytes": 666
+    },
+    {
+      "path": "cxas_app/agents/appointment_agent/instruction.txt",
+      "type": "instruction",
+      "size_bytes": 1697
+    },
+    {
+      "path": "cxas_app/agents/appointment_agent/after_model_callbacks/after_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 1585
+    },
+    {
+      "path": "cxas_app/agents/appointment_agent/before_model_callbacks/before_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 5277
+    },
+    {
+      "path": "cxas_app/agents/auth_agent/auth_agent.json",
+      "type": "agent_config",
+      "size_bytes": 667
+    },
+    {
+      "path": "cxas_app/agents/auth_agent/instruction.txt",
+      "type": "instruction",
+      "size_bytes": 2351
+    },
+    {
+      "path": "cxas_app/agents/auth_agent/after_model_callbacks/after_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 1585
+    },
+    {
+      "path": "cxas_app/agents/auth_agent/before_model_callbacks/before_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 5277
+    },
+    {
+      "path": "cxas_app/agents/billing_agent/billing_agent.json",
+      "type": "agent_config",
+      "size_bytes": 632
+    },
+    {
+      "path": "cxas_app/agents/billing_agent/instruction.txt",
+      "type": "instruction",
+      "size_bytes": 2052
+    },
+    {
+      "path": "cxas_app/agents/billing_agent/after_model_callbacks/after_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 1585
+    },
+    {
+      "path": "cxas_app/agents/billing_agent/before_model_callbacks/before_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 5277
+    },
+    {
+      "path": "cxas_app/agents/telco_root_agent/instruction.txt",
+      "type": "instruction",
+      "size_bytes": 3216
+    },
+    {
+      "path": "cxas_app/agents/telco_root_agent/telco_root_agent.json",
+      "type": "agent_config",
+      "size_bytes": 1019
+    },
+    {
+      "path": "cxas_app/agents/telco_root_agent/after_model_callbacks/after_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 1585
+    },
+    {
+      "path": "cxas_app/agents/telco_root_agent/before_agent_callbacks/before_agent_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 2574
+    },
+    {
+      "path": "cxas_app/agents/telco_root_agent/before_model_callbacks/before_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 5277
+    },
+    {
+      "path": "cxas_app/agents/secondary_language_agent/instruction.txt",
+      "type": "instruction",
+      "size_bytes": 1819
+    },
+    {
+      "path": "cxas_app/agents/secondary_language_agent/secondary_language_agent.json",
+      "type": "agent_config",
+      "size_bytes": 689
+    },
+    {
+      "path": "cxas_app/agents/secondary_language_agent/after_model_callbacks/after_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 1585
+    },
+    {
+      "path": "cxas_app/agents/secondary_language_agent/before_model_callbacks/before_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 5277
+    },
+    {
+      "path": "cxas_app/agents/account_agent/account_agent.json",
+      "type": "agent_config",
+      "size_bytes": 639
+    },
+    {
+      "path": "cxas_app/agents/account_agent/instruction.txt",
+      "type": "instruction",
+      "size_bytes": 2222
+    },
+    {
+      "path": "cxas_app/agents/account_agent/after_model_callbacks/after_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 1585
+    },
+    {
+      "path": "cxas_app/agents/account_agent/before_model_callbacks/before_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 5277
+    },
+    {
+      "path": "cxas_app/agents/sales_agent/instruction.txt",
+      "type": "instruction",
+      "size_bytes": 1849
+    },
+    {
+      "path": "cxas_app/agents/sales_agent/sales_agent.json",
+      "type": "agent_config",
+      "size_bytes": 589
+    },
+    {
+      "path": "cxas_app/agents/sales_agent/after_model_callbacks/after_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 1585
+    },
+    {
+      "path": "cxas_app/agents/sales_agent/before_model_callbacks/before_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 5277
+    },
+    {
+      "path": "cxas_app/agents/tech_support_agent/instruction.txt",
+      "type": "instruction",
+      "size_bytes": 2141
+    },
+    {
+      "path": "cxas_app/agents/tech_support_agent/tech_support_agent.json",
+      "type": "agent_config",
+      "size_bytes": 659
+    },
+    {
+      "path": "cxas_app/agents/tech_support_agent/after_model_callbacks/after_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 1585
+    },
+    {
+      "path": "cxas_app/agents/tech_support_agent/before_model_callbacks/before_model_callbacks_01/python_code.py",
+      "type": "callback",
+      "size_bytes": 5277
+    }
+  ],
+  "files_skipped": [],
+  "unresolved": [],
+  "next_step_recommendation": "Gate 3 Scaffolding verified and clean. Ready for Gate 4 / Gate 5 (evaluation suite authoring with eval-writer)."
+}

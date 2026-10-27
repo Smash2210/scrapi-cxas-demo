@@ -1,0 +1,123 @@
+{
+    "name": "telco-voice-central",
+    "displayName": "Telco Voice Central",
+    "description": "Telco Voice Central conversational voice agent handling customer service, billing, tech support, sales, appointments, and account management.",
+    "rootAgent": "telco_root_agent",
+    "tools": [
+        "fetch_customer_profile",
+        "send_authentication_otp",
+        "validate_authentication_otp",
+        "validate_authentication_pin",
+        "evaluate_routing_rules",
+        "fetch_recent_bills",
+        "create_dispute_ticket",
+        "check_regional_outage",
+        "start_virtual_repair",
+        "fetch_availability_slots",
+        "commit_appointment_reschedule",
+        "fetch_plan_catalog",
+        "send_password_reset_sms",
+        "execute_suspend_restore",
+        "execute_live_agent_handover",
+        "end_session"
+    ],
+    "modelSettings": {
+        "model": "gemini-3.1-flash-live"
+    },
+    "languageSettings": {
+        "defaultLanguageCode": "en-US"
+    },
+    "timeZoneSettings": {
+        "timeZone": "America/New_York"
+    },
+    "audioProcessingConfig": {
+        "synthesizeSpeechConfigs": {
+            "en-US": {
+                "speakingRate": 1.0
+            }
+        }
+    },
+    "defaultChannelProfile": {},
+    "loggingSettings": {
+        "conversationLoggingSettings": {},
+        "evaluationAudioRecordingConfig": {
+            "gcsBucket": "gs://scrapi-agent"
+        }
+    },
+    "toolExecutionMode": "PARALLEL",
+    "evaluationMetricsThresholds": {
+        "goldenEvaluationMetricsThresholds": {
+            "turnLevelMetricsThresholds": {
+                "semanticSimilaritySuccessThreshold": 3,
+                "overallToolInvocationCorrectnessThreshold": 1
+            },
+            "toolMatchingSettings": {
+                "extraToolCallBehavior": "ALLOW"
+            }
+        },
+        "goldenHallucinationMetricBehavior": "DISABLED"
+    },
+    "variableDeclarations": [
+        {"name": "clid", "description": "Caller ID 10-digit ANI phone number from telephony gateway", "schema": {"type": "STRING", "default": ""}},
+        {"name": "tfn", "description": "Toll-free number dialed by caller to drive brand routing", "schema": {"type": "STRING", "default": ""}},
+        {"name": "cirn", "description": "Customer Individual Reference Number, echoed last-4 only", "schema": {"type": "STRING", "default": ""}},
+        {"name": "billing_account", "description": "10-digit Billing Account Number, echoed last-4 only", "schema": {"type": "STRING", "default": ""}},
+        {"name": "customer_type", "description": "Customer classification such as New or Existing", "schema": {"type": "STRING", "default": ""}},
+        {"name": "user_id", "description": "Internal CRM record identifier for customer account", "schema": {"type": "STRING", "default": ""}},
+        {"name": "business_flag", "description": "Indicator if caller account is a business account ('true' or 'false')", "schema": {"type": "STRING", "default": "false"}},
+        {"name": "region", "description": "Geographic service region code such as Region-A, Region-B, or Region-C", "schema": {"type": "STRING", "default": ""}},
+        {"name": "auth_status", "description": "Authentication outcome status ('Pass' or 'Fail')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "identification_status", "description": "Profile lookup identification outcome ('Pass' or 'Fail')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "auth_attempts_remaining", "description": "Number of remaining authentication retry attempts", "schema": {"type": "INTEGER", "default": 3}},
+        {"name": "auth_method", "description": "Active verification modality ('otp' or 'pin')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "route", "description": "Target specialist module name", "schema": {"type": "STRING", "default": ""}},
+        {"name": "lob", "description": "Line of business ('mobility', 'internet', 'tv', 'homephone', 'smarthome')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "tv_sub_type", "description": "TV service delivery type ('streaming', 'satellite', 'streaming_only')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "language", "description": "Locked caller language code ('primary' or 'secondary')", "schema": {"type": "STRING", "default": "primary"}},
+        {"name": "utterance", "description": "Most recent caller intent transcript used for routing and topic switching", "schema": {"type": "STRING", "default": ""}},
+        {"name": "dtmf_digits", "description": "Normalized DTMF keypad digits captured during current turn", "schema": {"type": "STRING", "default": ""}},
+        {"name": "local_noinput_counter", "description": "Consecutive silent turns on current module", "schema": {"type": "INTEGER", "default": 0}},
+        {"name": "no_match_confirmation_count", "description": "Consecutive disambiguation retry count", "schema": {"type": "INTEGER", "default": 0}},
+        {"name": "global_err_count", "description": "Cumulative cross-module validation error count", "schema": {"type": "INTEGER", "default": 0}},
+        {"name": "misc_counter", "description": "General purpose flow counter for iterative steps", "schema": {"type": "INTEGER", "default": 0}},
+        {"name": "mock_mode", "description": "Flag enabling hermetic mock execution for tests ('True' or 'False')", "schema": {"type": "STRING", "default": "False"}},
+        {"name": "last_pmt_amt", "description": "Last recorded billing payment amount", "schema": {"type": "STRING", "default": ""}},
+        {"name": "amount", "description": "Transaction, refund, or installment amount under discussion", "schema": {"type": "STRING", "default": ""}},
+        {"name": "ban_type", "description": "Billing account tier ('ConsumerPostpaid', 'Prepaid', 'SMB')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "is_prepaid", "description": "Indicates if customer subscription is prepaid ('true' or 'false')", "schema": {"type": "STRING", "default": "false"}},
+        {"name": "loyalty_limit", "description": "Maximum dollar limit for automated dispute credit approval", "schema": {"type": "INTEGER", "default": 0}},
+        {"name": "dispute_charge_id", "description": "Identifier of the specific line item under billing dispute", "schema": {"type": "STRING", "default": ""}},
+        {"name": "ticket_id", "description": "Support or dispute case tracking identifier", "schema": {"type": "STRING", "default": ""}},
+        {"name": "ticket_state", "description": "Current status of support ticket ('open', 'in-progress', 'closed')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "vr_task_count", "description": "Iteration step counter for virtual repair diagnostics", "schema": {"type": "INTEGER", "default": 0}},
+        {"name": "item_list", "description": "Serial numbers or hardware codes for provisioned customer equipment", "schema": {"type": "STRING", "default": ""}},
+        {"name": "intent_type", "description": "Sub-classification of customer intent or technical issue", "schema": {"type": "STRING", "default": ""}},
+        {"name": "api_resp", "description": "Diagnostic payload of most recent external service response", "schema": {"type": "STRING", "default": ""}},
+        {"name": "selected_plan_id", "description": "Catalog plan SKU selected by customer during sales flow", "schema": {"type": "STRING", "default": ""}},
+        {"name": "order_id", "description": "Hardware or plan order tracking reference number", "schema": {"type": "STRING", "default": ""}},
+        {"name": "delivery_eta", "description": "Estimated delivery date window for shipped hardware", "schema": {"type": "STRING", "default": ""}},
+        {"name": "appt_id", "description": "Unique field technician appointment identifier", "schema": {"type": "STRING", "default": ""}},
+        {"name": "selected_slot", "description": "Customer selected appointment time slot", "schema": {"type": "STRING", "default": ""}},
+        {"name": "technician_status", "description": "Field technician dispatch status ('scheduled', 'en-route', 'completed')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "sms_type", "description": "Transactional SMS template type ('Public' or 'Private')", "schema": {"type": "STRING", "default": ""}},
+        {"name": "sms_content", "description": "Outbound SMS message text body", "schema": {"type": "STRING", "default": ""}},
+        {"name": "sms_destination", "description": "Target mobile number for outbound SMS delivery", "schema": {"type": "STRING", "default": ""}},
+        {"name": "day_val", "description": "Transient temporary variable for parsed day value", "schema": {"type": "STRING", "default": ""}},
+        {"name": "date_val", "description": "Transient temporary variable for parsed date value", "schema": {"type": "STRING", "default": ""}},
+        {"name": "month_val", "description": "Transient temporary variable for parsed month value", "schema": {"type": "STRING", "default": ""}},
+        {"name": "end_time", "description": "Transient temporary variable for appointment window end time", "schema": {"type": "STRING", "default": ""}},
+        {"name": "flag_val", "description": "Transient scratchpad flag for multi-turn step completion", "schema": {"type": "STRING", "default": ""}},
+        {"name": "active_advisory", "description": "Active regional service alert advisory text", "schema": {"type": "STRING", "default": ""}},
+        {"name": "handover_id", "description": "Identifier for telephony ACD live agent escalation transfer", "schema": {"type": "STRING", "default": ""}},
+        {"name": "queue", "description": "Target telephony queue name for escalation transfer", "schema": {"type": "STRING", "default": ""}},
+        {"name": "session_id", "description": "Unique virtual repair or diagnostic session identifier", "schema": {"type": "STRING", "default": ""}},
+        {"name": "first_diagnostic_question", "description": "Initial diagnostic prompt from virtual repair system", "schema": {"type": "STRING", "default": ""}},
+        {"name": "new_slot", "description": "Selected reschedule timeslot string for field service", "schema": {"type": "STRING", "default": ""}},
+        {"name": "reason", "description": "Reason code for escalation, dispute, or suspension action", "schema": {"type": "STRING", "default": ""}},
+        {"name": "notes", "description": "Detailed agent notes attached to dispute or support ticket", "schema": {"type": "STRING", "default": ""}},
+        {"name": "zip", "description": "Customer service address zip code for technician availability", "schema": {"type": "STRING", "default": ""}},
+        {"name": "service_type", "description": "Requested service or installation type for technician dispatch", "schema": {"type": "STRING", "default": ""}},
+        {"name": "charge_id", "description": "Line item charge identifier evaluated for billing credit or dispute", "schema": {"type": "STRING", "default": ""}},
+        {"name": "days", "description": "Turnaround window in business days for billing adjustments and refunds", "schema": {"type": "STRING", "default": "2"}}
+    ]
+}

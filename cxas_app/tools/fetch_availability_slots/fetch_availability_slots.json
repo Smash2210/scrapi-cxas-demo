@@ -1,0 +1,10 @@
+{
+    "name": "fetch_availability_slots",
+    "displayName": "fetch_availability_slots",
+    "pythonFunction": {
+        "name": "fetch_availability_slots",
+        "pythonCode": "tools/fetch_availability_slots/python_function/python_code.py",
+        "description": "Queries dispatch schedule for available field service technician appointment windows by postal zip and service type."
+    },
+    "executionType": "SYNCHRONOUS"
+}

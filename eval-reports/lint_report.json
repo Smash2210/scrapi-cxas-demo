@@ -1,0 +1,7 @@
+{
+  "status": "clean",
+  "iterations": 1,
+  "fixes_applied": [],
+  "unresolved": [],
+  "final_lint_output": "Linting app: cxas_app\n============================================================\n  Model:     gemini-3.1-flash-live\n  Agents:    8\n  Tools:     15\n  Callbacks: 17\n  Evals:     0\n\n============================================================\nLINT RESULTS\n============================================================\n\n  All checks passed.\n\nLint PASSED (no errors).\n"
+}

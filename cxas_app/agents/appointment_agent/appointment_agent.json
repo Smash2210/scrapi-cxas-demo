@@ -1,0 +1,22 @@
+{
+    "name": "appointment_agent",
+    "displayName": "appointment_agent",
+    "instruction": "agents/appointment_agent/instruction.txt",
+    "tools": [
+        "fetch_availability_slots",
+        "commit_appointment_reschedule",
+        "execute_live_agent_handover",
+        "end_session"
+    ],
+    "childAgents": [],
+    "beforeModelCallbacks": [
+        {
+            "pythonCode": "agents/appointment_agent/before_model_callbacks/before_model_callbacks_01/python_code.py"
+        }
+    ],
+    "afterModelCallbacks": [
+        {
+            "pythonCode": "agents/appointment_agent/after_model_callbacks/after_model_callbacks_01/python_code.py"
+        }
+    ]
+}

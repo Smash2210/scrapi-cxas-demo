@@ -1,0 +1,22 @@
+{
+    "name": "account_agent",
+    "displayName": "account_agent",
+    "instruction": "agents/account_agent/instruction.txt",
+    "tools": [
+        "send_password_reset_sms",
+        "execute_suspend_restore",
+        "execute_live_agent_handover",
+        "end_session"
+    ],
+    "childAgents": [],
+    "beforeModelCallbacks": [
+        {
+            "pythonCode": "agents/account_agent/before_model_callbacks/before_model_callbacks_01/python_code.py"
+        }
+    ],
+    "afterModelCallbacks": [
+        {
+            "pythonCode": "agents/account_agent/after_model_callbacks/after_model_callbacks_01/python_code.py"
+        }
+    ]
+}

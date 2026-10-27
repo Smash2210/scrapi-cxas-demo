@@ -1,0 +1,10 @@
+{
+    "name": "fetch_plan_catalog",
+    "displayName": "fetch_plan_catalog",
+    "pythonFunction": {
+        "name": "fetch_plan_catalog",
+        "pythonCode": "tools/fetch_plan_catalog/python_function/python_code.py",
+        "description": "Retrieves available rate plans and hardware packages for sales upgrades and new service inquiries."
+    },
+    "executionType": "SYNCHRONOUS"
+}

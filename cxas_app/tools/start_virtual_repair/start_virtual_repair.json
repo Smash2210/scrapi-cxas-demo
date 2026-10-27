@@ -1,0 +1,10 @@
+{
+    "name": "start_virtual_repair",
+    "displayName": "start_virtual_repair",
+    "pythonFunction": {
+        "name": "start_virtual_repair",
+        "pythonCode": "tools/start_virtual_repair/python_function/python_code.py",
+        "description": "Initializes an automated line diagnostic and modem telemetry ping test session for technical troubleshooting."
+    },
+    "executionType": "SYNCHRONOUS"
+}

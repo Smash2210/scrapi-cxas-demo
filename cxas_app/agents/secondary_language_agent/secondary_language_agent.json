@@ -1,0 +1,22 @@
+{
+    "name": "secondary_language_agent",
+    "displayName": "secondary_language_agent",
+    "instruction": "agents/secondary_language_agent/instruction.txt",
+    "tools": [
+        "check_regional_outage",
+        "start_virtual_repair",
+        "execute_live_agent_handover",
+        "end_session"
+    ],
+    "childAgents": [],
+    "beforeModelCallbacks": [
+        {
+            "pythonCode": "agents/secondary_language_agent/before_model_callbacks/before_model_callbacks_01/python_code.py"
+        }
+    ],
+    "afterModelCallbacks": [
+        {
+            "pythonCode": "agents/secondary_language_agent/after_model_callbacks/after_model_callbacks_01/python_code.py"
+        }
+    ]
+}

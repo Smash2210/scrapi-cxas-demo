@@ -1,0 +1,10 @@
+{
+    "name": "execute_suspend_restore",
+    "displayName": "execute_suspend_restore",
+    "pythonFunction": {
+        "name": "execute_suspend_restore",
+        "pythonCode": "tools/execute_suspend_restore/python_function/python_code.py",
+        "description": "Executes account service suspension (lost/stolen) or restoration (upon balance clearance)."
+    },
+    "executionType": "SYNCHRONOUS"
+}

@@ -1,0 +1,10 @@
+{
+    "name": "commit_appointment_reschedule",
+    "displayName": "commit_appointment_reschedule",
+    "pythonFunction": {
+        "name": "commit_appointment_reschedule",
+        "pythonCode": "tools/commit_appointment_reschedule/python_function/python_code.py",
+        "description": "Commits a selected reschedule timeslot for an active technician visit in field dispatch system."
+    },
+    "executionType": "SYNCHRONOUS"
+}

@@ -1,0 +1,10 @@
+{
+    "name": "evaluate_routing_rules",
+    "displayName": "evaluate_routing_rules",
+    "pythonFunction": {
+        "name": "evaluate_routing_rules",
+        "pythonCode": "tools/evaluate_routing_rules/python_function/python_code.py",
+        "description": "Evaluates caller intent against business classification rules to determine target specialist agent module."
+    },
+    "executionType": "SYNCHRONOUS"
+}

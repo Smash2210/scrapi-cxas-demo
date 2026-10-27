@@ -1,0 +1,10 @@
+{
+    "name": "create_dispute_ticket",
+    "displayName": "create_dispute_ticket",
+    "pythonFunction": {
+        "name": "create_dispute_ticket",
+        "pythonCode": "tools/create_dispute_ticket/python_function/python_code.py",
+        "description": "Opens a formal billing dispute ticket for disputed charges that exceed automated adjustment ceilings."
+    },
+    "executionType": "SYNCHRONOUS"
+}

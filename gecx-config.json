@@ -1,0 +1,11 @@
+{
+  "gcp_project_id": "learning-gcp-436314",
+  "location": "us",
+  "app_name": "telco-voice-central",
+  "deployed_app_id": null,
+  "app_dir": "cxas_app/",
+  "model": "gemini-3.1-flash-live",
+  "modality": "audio",
+  "default_channel": "audio",
+  "gcs_bucket": "gs://scrapi-agent"
+}

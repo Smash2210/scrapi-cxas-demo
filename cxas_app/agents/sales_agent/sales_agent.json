@@ -1,0 +1,21 @@
+{
+    "name": "sales_agent",
+    "displayName": "sales_agent",
+    "instruction": "agents/sales_agent/instruction.txt",
+    "tools": [
+        "fetch_plan_catalog",
+        "execute_live_agent_handover",
+        "end_session"
+    ],
+    "childAgents": [],
+    "beforeModelCallbacks": [
+        {
+            "pythonCode": "agents/sales_agent/before_model_callbacks/before_model_callbacks_01/python_code.py"
+        }
+    ],
+    "afterModelCallbacks": [
+        {
+            "pythonCode": "agents/sales_agent/after_model_callbacks/after_model_callbacks_01/python_code.py"
+        }
+    ]
+}

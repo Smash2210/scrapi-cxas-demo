@@ -1,0 +1,23 @@
+{
+    "name": "auth_agent",
+    "displayName": "auth_agent",
+    "instruction": "agents/auth_agent/instruction.txt",
+    "tools": [
+        "send_authentication_otp",
+        "validate_authentication_otp",
+        "validate_authentication_pin",
+        "execute_live_agent_handover",
+        "end_session"
+    ],
+    "childAgents": [],
+    "beforeModelCallbacks": [
+        {
+            "pythonCode": "agents/auth_agent/before_model_callbacks/before_model_callbacks_01/python_code.py"
+        }
+    ],
+    "afterModelCallbacks": [
+        {
+            "pythonCode": "agents/auth_agent/after_model_callbacks/after_model_callbacks_01/python_code.py"
+        }
+    ]
+}

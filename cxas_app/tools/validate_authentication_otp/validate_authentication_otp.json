@@ -1,0 +1,10 @@
+{
+    "name": "validate_authentication_otp",
+    "displayName": "validate_authentication_otp",
+    "pythonFunction": {
+        "name": "validate_authentication_otp",
+        "pythonCode": "tools/validate_authentication_otp/python_function/python_code.py",
+        "description": "Validates the 6-digit OTP passcode entered by the caller via voice or DTMF. Never echoes code back."
+    },
+    "executionType": "SYNCHRONOUS"
+}

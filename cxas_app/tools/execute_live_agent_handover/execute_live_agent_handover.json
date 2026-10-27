@@ -1,0 +1,10 @@
+{
+    "name": "execute_live_agent_handover",
+    "displayName": "execute_live_agent_handover",
+    "pythonFunction": {
+        "name": "execute_live_agent_handover",
+        "pythonCode": "tools/execute_live_agent_handover/python_function/python_code.py",
+        "description": "Escalates session to telephony ACD queue and attaches session context variables for live representative pop."
+    },
+    "executionType": "SYNCHRONOUS"
+}

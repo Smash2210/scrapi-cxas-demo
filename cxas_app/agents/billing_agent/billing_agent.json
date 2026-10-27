@@ -1,0 +1,22 @@
+{
+    "name": "billing_agent",
+    "displayName": "billing_agent",
+    "instruction": "agents/billing_agent/instruction.txt",
+    "tools": [
+        "fetch_recent_bills",
+        "create_dispute_ticket",
+        "execute_live_agent_handover",
+        "end_session"
+    ],
+    "childAgents": [],
+    "beforeModelCallbacks": [
+        {
+            "pythonCode": "agents/billing_agent/before_model_callbacks/before_model_callbacks_01/python_code.py"
+        }
+    ],
+    "afterModelCallbacks": [
+        {
+            "pythonCode": "agents/billing_agent/after_model_callbacks/after_model_callbacks_01/python_code.py"
+        }
+    ]
+}

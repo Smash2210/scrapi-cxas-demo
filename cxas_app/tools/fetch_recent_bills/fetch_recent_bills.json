@@ -1,0 +1,10 @@
+{
+    "name": "fetch_recent_bills",
+    "displayName": "fetch_recent_bills",
+    "pythonFunction": {
+        "name": "fetch_recent_bills",
+        "pythonCode": "tools/fetch_recent_bills/python_function/python_code.py",
+        "description": "Retrieves recent billing statements and itemized charge details for an authenticated billing account."
+    },
+    "executionType": "SYNCHRONOUS"
+}
