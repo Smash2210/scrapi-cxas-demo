@@ -1,0 +1,744 @@
+evals:
+  - name: "sim__cancel_service_moving"
+    tags: ["M7_cancellation"]
+    steps:
+      - goal: "I want to cancel my home internet service because I am moving to a new city where this company doesn't provide coverage"
+        success_criteria: "The user successfully authenticates, hears the mandatory contract cancellation fee disclosure, and completes the cancellation request"
+        response_guide: "State that you want to cancel your service because you are moving. Provide your phone number when asked. Complete the security verification by entering the OTP sent to your phone. Listen to the cancellation fee disclosure and confirm you still want to proceed"
+        max_turns: 10
+    expectations:
+      - "The agent must read the contract cancellation fee disclosure verbatim before finalizing the cancellation"
+      - "The agent must authenticate the user before processing the cancellation"
+
+  - name: "sim__port_out_mobile_number"
+    tags: ["M7_cancellation"]
+    steps:
+      - goal: "I want to port my mobile phone number out to another carrier"
+        success_criteria: "The user authenticates, hears the cancellation disclosure, and receives the necessary information or confirmation to transfer their number"
+        response_guide: "Say 'I need to port out my phone number to another network.' Provide your account details and complete the security verification. Confirm you understand the terms when the agent explains the cancellation details"
+        max_turns: 10
+    expectations:
+      - "The agent must authenticate the user before providing port-out details"
+      - "The agent must read the contract cancellation fee disclosure verbatim"
+
+  - name: "sim__cancel_service_auth_retry"
+    tags: ["M7_cancellation", "M2_authentication"]
+    steps:
+      - goal: "I want to cancel my TV service, but I might enter the wrong security code the first time"
+        success_criteria: "The user is able to retry authentication after a failed attempt, successfully authenticates, hears the cancellation fee disclosure, and cancels the service"
+        response_guide: "Say 'I want to cancel my TV package.' When sent a verification code, intentionally provide an incorrect 6-digit code first. When prompted again, provide the correct code. Listen to the cancellation disclosure and confirm"
+        max_turns: 10
+    expectations:
+      - "The agent must allow a retry after a failed verification attempt"
+      - "The agent must read the contract cancellation fee disclosure verbatim before cancellation"
+
+  - name: "sim__cancel_business_account_redirection"
+    tags: ["M7_cancellation"]
+    steps:
+      - goal: "I want to cancel the internet service for my business account"
+        success_criteria: "The user is recognized as a business account and is immediately transferred to a business agent with the appropriate verbatim message"
+        response_guide: "Say 'I need to cancel my business internet line.' Provide your business account details when asked"
+        max_turns: 10
+    expectations:
+      - "The agent must play the verbatim business handoff message"
+      - "The agent must not attempt to self-serve the cancellation for a business account"
+
+  - name: "sim__bill_dispute_cancellation_pivot"
+    tags: ["M7_cancellation", "M3_billing_and_payment"]
+    steps:
+      - goal: "I want to dispute a charge on my bill, but if it's too frustrating, I want to just cancel my service entirely"
+        success_criteria: "The user starts a billing dispute, pivots mid-call to cancellation, authenticates, hears the cancellation disclosure, and cancels"
+        response_guide: "Start by saying 'I have an incorrect charge on my bill.' After the agent looks up the bill, say 'You know what, this is too much hassle, I just want to cancel my service.' Complete authentication, listen to the disclosure, and confirm"
+        max_turns: 10
+    expectations:
+      - "The agent must successfully transition from the billing flow to the cancellation flow without forcing the user to finish the dispute"
+      - "The agent must read the contract cancellation fee disclosure verbatim before cancellation"
+
+  - name: "sim__cancel_service_after_hours"
+    tags: ["M7_cancellation"]
+    steps:
+      - goal: "I want to cancel my internet service late at night"
+        success_criteria: "The user is informed that the cancellation queue is closed and is offered a next-business-day option or"
+        response_guide: "Say 'I need to cancel my internet service immediately.' If the agent says the specialist queue is closed, accept or next-business-day routing"
+        max_turns: 10
+    expectations:
+      - "The agent must recognize that the specialist queue is closed after hours for plan changes and cancellations"
+      - "The agent must route the request to the next business day"
+
+  - name: "sim__immediate_request"
+    tags: ["M1_session_lifecycle"]
+    steps:
+      - goal: "I want to speak to a human representative immediately without dealing with an automated system"
+        success_criteria: "The agent immediately triggers a live agent transfer with the correct verbatim handoff message"
+        response_guide: "As soon as the call connects and the greeting starts, interrupt and say 'I want to talk to a person.'"
+        max_turns: 10
+    expectations:
+      - "The agent must immediately play the verbatim live agent handoff message"
+      - "The agent must terminate the automated session with the reason 'user_requested_agent'"
+
+  - name: "sim__request_after_billing_query"
+    tags: ["M1_session_lifecycle"]
+    steps:
+      - goal: "I want to check my bill balance, but then I want to talk to a human to explain it to me"
+        success_criteria: "The user asks about their bill, then requests an agent, and is successfully transferred with the verbatim handoff"
+        response_guide: "Say 'How much is my bill?' After the agent answers, say 'That doesn't sound right, let me talk to a real person.'"
+        max_turns: 10
+    expectations:
+      - "The agent must transfer the user to a live representative upon request"
+      - "The agent must play the verbatim live agent handoff message"
+
+  - name: "sim__request_secondary_language"
+    tags: ["M1_session_lifecycle", "M8_secondary_language"]
+    steps:
+      - goal: "I want to speak to a Spanish-speaking representative"
+        success_criteria: "The user requests a representative in their preferred language and is transferred using the localized verbatim handoff"
+        response_guide: "Speak in Spanish (or your secondary language) and say 'Quiero hablar con un representante' (I want to speak to a representative)"
+        max_turns: 10
+    expectations:
+      - "The agent must remain in the secondary language for the handoff"
+      - "The agent must play the localized verbatim live agent handoff message"
+
+  - name: "sim__request_during_troubleshooting"
+    tags: ["M1_session_lifecycle"]
+    steps:
+      - goal: "I want to fix my TV signal, but I get annoyed with the automated troubleshooting steps and want a human"
+        success_criteria: "The user starts technical troubleshooting, requests a human mid-flow, and is transferred immediately"
+        response_guide: "Say 'My TV has no signal.' Let the agent start the diagnostic questions, then interrupt with 'This is taking too long, connect me to a person.'"
+        max_turns: 10
+    expectations:
+      - "The agent must stop the troubleshooting flow immediately upon the user's request for an agent"
+      - "The agent must play the verbatim live agent handoff message"
+
+  - name: "sim__request_dtmf"
+    tags: ["M1_session_lifecycle"]
+    steps:
+      - goal: "I want to reach an operator by pressing buttons on my phone keypad"
+        success_criteria: "The user presses '0' on their keypad and is immediately routed to a live agent"
+        response_guide: "Press '0' on your keypad during the greeting or when prompted to state your issue"
+        max_turns: 10
+    expectations:
+      - "The agent must detect the DTMF input and route to a live agent"
+      - "The agent must play the verbatim live agent handoff message"
+
+  - name: "sim__request_after_hours_fraud"
+    tags: ["M1_session_lifecycle"]
+    steps:
+      - goal: "I want to report urgent fraud on my account late at night and speak to a live representative"
+        success_criteria: "The user reports fraud after hours and is immediately escalated to the 24/7 live queue"
+        response_guide: "Say 'Someone hacked my account and made unauthorized charges!' When the agent responds, say 'I need to speak to a fraud specialist right now.'"
+        max_turns: 10
+    expectations:
+      - "The agent must bypass normal authentication and immediately trigger the fraud escalation path"
+      - "The agent must connect the user to the 24/7 live queue even if it is after hours"
+
+  - name: "sim__tech_status_happy_path"
+    tags: ["M6_status_and_tickets"]
+    steps:
+      - goal: "I want to find out when the technician is coming to fix my internet today"
+        success_criteria: "The user successfully learns the arrival window of their scheduled technician"
+        response_guide: "State that you are calling to check on your appointment. Provide your phone number and verify your identity when prompted. Confirm you want the status of today's visit"
+        max_turns: 10
+    expectations:
+      - "The user is informed of the correct scheduled time window for their technician visit"
+
+  - name: "sim__ticket_status_happy_path"
+    tags: ["M6_status_and_tickets"]
+    steps:
+      - goal: "I want to check the status of the open support ticket for my TV service"
+        success_criteria: "The user successfully learns the current status of their open support ticket"
+        response_guide: "Ask about the status of your open support ticket. Provide your account details and verify your identity. Confirm which ticket you are asking about"
+        max_turns: 10
+    expectations:
+      - "The user is provided with the current status of their open support ticket"
+
+  - name: "sim__tech_status_multiple_appointments"
+    tags: ["M6_status_and_tickets"]
+    steps:
+      - goal: "I want to check the status of my TV installation appointment, but I also have an internet appointment scheduled"
+        success_criteria: "The user successfully clarifies which appointment they are asking about and receives the correct status"
+        response_guide: "Ask where your technician is. When the system asks which appointment you mean, specify it's for the TV service"
+        max_turns: 10
+    expectations:
+      - "The user is prompted to disambiguate between their multiple appointments and receives the status for the correct one"
+
+  - name: "sim__tech_status_en_route_cancel"
+    tags: ["M6_status_and_tickets"]
+    steps:
+      - goal: "I want to check on my technician's arrival, and if they are close, I want to leave a note for them since I can't cancel now"
+        success_criteria: "The user learns the technician is en-route, is informed they cannot cancel at this stage, and successfully leaves a note"
+        response_guide: "Ask for the technician's status. When told they are en-route, ask if you can cancel. When told it's too late, ask to leave a note instead"
+        max_turns: 10
+    expectations:
+      - "The user is informed that the technician is en-route and cannot be cancelled, but a note is successfully attached"
+
+  - name: "sim__ticket_status_found"
+    tags: ["M6_status_and_tickets"]
+    steps:
+      - goal: "I want to check on a support ticket I thought was open, but if none exists, I want to know"
+        success_criteria: "The user is informed that no active tickets exist on their account"
+        response_guide: "Ask to check the status of your support ticket. Provide your account number and verify your identity. When told there are no open tickets, ask to confirm"
+        max_turns: 10
+    expectations:
+      - "The user is clearly informed that there are no active support tickets on their account"
+
+  - name: "sim__password_reset_happy_path"
+    tags: ["M7_password_and_mfa"]
+    steps:
+      - goal: "I forgot my online account password and need to reset it using a link sent to my phone"
+        success_criteria: "The user receives a password reset link via SMS and is informed of its 30-minute validity"
+        response_guide: "Say 'I forgot my password.' Provide your phone number, verify your identity via the code sent to you, and accept the SMS reset link"
+        max_turns: 10
+    expectations:
+      - "The user is sent a password reset link via SMS"
+      - "The user is informed that the link is valid for 30 minutes"
+
+  - name: "sim__password_reset_mobile_fallback"
+    tags: ["M7_password_and_mfa", "M2_authentication"]
+    steps:
+      - goal: "I need to reset my password but I don't have my mobile phone handy, so I want to verify using my PIN instead"
+        success_criteria: "The user successfully verifies their identity using their 4-digit PIN and triggers the password reset process"
+        response_guide: "Say you need to reset your login password. When asked to verify via SMS OTP, state that you don't have your phone and want to use your PIN instead. Enter your PIN via keypad"
+        max_turns: 10
+    expectations:
+      - "The user successfully bypasses the SMS OTP flow by using their PIN"
+      - "The user triggers the password reset process after successful PIN verification"
+
+  - name: "sim__password_reset_otp_failure"
+    tags: ["M7_password_and_mfa", "M2_authentication"]
+    steps:
+      - goal: "I want to reset my password but I keep entering the wrong verification code"
+        success_criteria: "The user is gracefully escalated to a live agent after three failed OTP verification attempts"
+        response_guide: "Say you forgot your password. Provide your account details. When sent the verification code, deliberately provide incorrect codes three times in a row"
+        max_turns: 10
+    expectations:
+      - "The user is escalated to a live agent after the third failed verification attempt"
+
+  - name: "sim__password_reset_business_account"
+    tags: ["M7_password_and_mfa"]
+    steps:
+      - goal: "I want to reset the password for my business account"
+        success_criteria: "The user is immediately routed to the business support queue with the appropriate disclosure"
+        response_guide: "Say you need to reset your business account password. Provide your business account details when prompted"
+        max_turns: 10
+    expectations:
+      - "The user hears the business handoff disclosure and is transferred to a business agent"
+
+  - name: "sim__password_reset_mid_call_pivot"
+    tags: ["M7_password_and_mfa"]
+    steps:
+      - goal: "I initially call about a billing question, but then realize I can't log in to view my bill, so I want to reset my password first"
+        success_criteria: "The user successfully switches topics mid-call and initiates the password reset flow"
+        response_guide: "Start by saying 'I have a question about my bill.' When the agent starts looking up your bill, say 'Actually, wait, I can't even log in. Can we reset my password first?'"
+        max_turns: 10
+    expectations:
+      - "The agent successfully switches from the billing topic to the password reset topic without forcing the user to complete the billing flow"
+
+  - name: "sim__enable_mfa_happy_path"
+    tags: ["M7_password_and_mfa"]
+    steps:
+      - goal: "I want to enable two-factor authentication on my account to make it more secure"
+        success_criteria: "The user successfully completes step-up authentication and has multi-factor authentication enabled"
+        response_guide: "Say 'I want to enable MFA.' Provide your account details, complete the step-up verification process, and confirm you want to turn it on"
+        max_turns: 10
+    expectations:
+      - "The user completes step-up authentication"
+      - "The user receives confirmation that multi-factor authentication is now enabled"
+
+  - name: "sim__disable_mfa_happy_path"
+    tags: ["M7_password_and_mfa"]
+    steps:
+      - goal: "I want to disable multi-factor authentication on my account because I am switching to a temporary phone"
+        success_criteria: "The user successfully completes step-up authentication and has multi-factor authentication disabled"
+        response_guide: "Say 'I need to disable two-factor authentication.' Provide your account details, complete the step-up verification, and confirm the change"
+        max_turns: 10
+    expectations:
+      - "The user completes step-up authentication"
+      - "The user receives confirmation that multi-factor authentication is now disabled"
+
+  - name: "sim__disable_mfa_auth_failure"
+    tags: ["M7_password_and_mfa", "M2_authentication"]
+    steps:
+      - goal: "I want to disable MFA but I cannot pass the step-up security check"
+        success_criteria: "The user is prevented from disabling MFA and is escalated to a specialist due to authentication failure"
+        response_guide: "Say 'I want to turn off multi-factor authentication.' Provide your account details. When prompted for the step-up PIN, enter incorrect digits three times"
+        max_turns: 10
+    expectations:
+      - "The user is blocked from making changes and is escalated to a live agent after failing authentication"
+
+  - name: "sim__mfa_vague_request"
+    tags: ["M7_password_and_mfa"]
+    steps:
+      - goal: "I want to secure my login but I'm not sure what it's called"
+        success_criteria: "The user is guided"
+        response_guide: "Say 'I want to make my login more secure.' When asked if you want to enable multi-factor authentication, say 'Yes, that's it.' Proceed with the setup"
+        max_turns: 10
+    expectations:
+      - "The agent successfully disambiguates the vague request and routes the user to the MFA setup flow"
+
+  - name: "sim__enable_mfa_secondary_language"
+    tags: ["M7_password_and_mfa", "M8_secondary_language"]
+    steps:
+      - goal: "I want to enable multi-factor authentication, speaking entirely in Spanish"
+        success_criteria: "The user successfully navigates the entire flow and enables MFA in Spanish without any language degradation"
+        response_guide: "Speak entirely in Spanish. Say 'Quiero activar la autenticación de dos factores.' Provide your account details and complete the verification in Spanish"
+        max_turns: 10
+    expectations:
+      - "The entire conversation remains in Spanish"
+      - "The user successfully enables multi-factor authentication"
+
+  - name: "sim__report_fraud_unauthorized_charges"
+    tags: ["M7_fraud"]
+    steps:
+      - goal: "I want to report unauthorized charges on my account that I did not make"
+        success_criteria: "The user receives the verbatim empathy protocol and is immediately escalated to a live agent without any self-serve or authentication attempts"
+        response_guide: "Say 'Someone used my account to buy things!' or 'There is fraud on my account.' Express concern and accept the transfer to a specialist"
+        max_turns: 10
+    expectations:
+      - "The user hears the verbatim empathy protocol"
+      - "The user is immediately escalated to a live agent without being asked to authenticate"
+
+  - name: "sim__report_fraud_identity_theft"
+    tags: ["M7_fraud"]
+    steps:
+      - goal: "I want to report that someone has opened a fraudulent account using my personal information"
+        success_criteria: "The user is immediately escalated to the fraud department with the verbatim empathy protocol, bypassing standard authentication"
+        response_guide: "Say 'I found out someone opened a fake account in my name.' Explain that you don't have an account number because it's identity theft"
+        max_turns: 10
+    expectations:
+      - "The user hears the verbatim empathy protocol"
+      - "The user is immediately escalated to a live agent without any self-serve or authentication attempts"
+
+  - name: "sim__report_fraud_mid_call_discovery"
+    tags: ["M7_fraud"]
+    steps:
+      - goal: "I call to check my bill, but during the call I realize there are fraudulent charges, so I want to report fraud immediately"
+        success_criteria: "The user successfully pivots to reporting fraud, receives the empathy protocol, and is immediately escalated"
+        response_guide: "Start by asking to check your bill. Once identified, say 'Wait, I see a charge for a phone I never bought. Someone hacked my account, this is fraud!' and demand to speak to the fraud team"
+        max_turns: 10
+    expectations:
+      - "The agent immediately stops the billing flow upon the fraud claim"
+      - "The user hears the verbatim empathy protocol and is escalated to a live agent"
+
+  - name: "sim__report_fraud_stolen_phone"
+    tags: ["M7_fraud"]
+    steps:
+      - goal: "I want to report that my phone was stolen and someone is using it to make unauthorized calls"
+        success_criteria: "The user is immediately escalated to the fraud queue with the verbatim empathy protocol"
+        response_guide: "Say 'My phone was stolen and someone is running up charges on my account right now!' Express urgency"
+        max_turns: 10
+    expectations:
+      - "The user hears the verbatim empathy protocol"
+      - "The user is immediately escalated to a live agent without being forced to complete standard self-serve troubleshooting"
+
+  - name: "sim__report_fraud_upset"
+    tags: ["M7_fraud"]
+    steps:
+      - goal: "I am extremely upset because my account has been compromised and I want to report fraud"
+        success_criteria: "The user is handled with extreme care, hears the empathy protocol, and is immediately transferred to a live specialist"
+        response_guide: "Say 'This is crazy, someone has hacked into my account and changed my details! I need to report fraud immediately!' Speak with an anxious, urgent tone"
+        max_turns: 10
+    expectations:
+      - "The user hears the verbatim empathy protocol"
+      - "The user is immediately escalated to a live agent"
+
+  - name: "sim__restore_service_non_payment"
+    tags: ["M7_service_restore", "M3_billing_and_payment"]
+    steps:
+      - goal: "My service was suspended because I forgot to pay my bill, and I want to pay the balance and get it restored"
+        success_criteria: "The user is routed to billing to clear their balance, and once paid, is routed back to have their service successfully restored with an SMS confirmation"
+        response_guide: "Say 'My service is suspended and I want it back on.' When told it's due to an unpaid balance, agree to pay it. Provide payment details, and confirm you want the service restored"
+        max_turns: 10
+    expectations:
+      - "The user is routed to the billing module to clear the balance first"
+      - "The user's service is restored after the balance is cleared"
+      - "The user receives an SMS confirmation of the restoration"
+
+  - name: "sim__restore_service_lost_stolen_found"
+    tags: ["M7_service_restore"]
+    steps:
+      - goal: "I temporarily suspended my service because I lost my phone, but now I found it and want to restore my service"
+        success_criteria: "The user successfully verifies their identity and has their service restored immediately since there is no balance owed"
+        response_guide: "Say 'I found my lost phone and I want to restore my suspended service.' Verify your identity when prompted, and confirm the restoration"
+        max_turns: 10
+    expectations:
+      - "The user's service is restored immediately without being routed to billing"
+      - "The user receives an SMS confirmation of the restoration"
+
+  - name: "sim__restore_service_refuse_payment"
+    tags: ["M7_service_restore", "M3_billing_and_payment"]
+    steps:
+      - goal: "My service is suspended for non-payment, and I want it restored but I refuse to pay the outstanding balance right now"
+        success_criteria: "The user is informed that the service cannot be restored without clearing the balance, and the session ends or escalates without restoration"
+        response_guide: "Say 'My internet is suspended, turn it back on.' When told you must pay the outstanding balance first, say 'I can't pay right now, just turn it on anyway.' Refuse any payment arrangements"
+        max_turns: 10
+    expectations:
+      - "The agent refuses to restore the service without a cleared balance"
+      - "The service remains suspended"
+
+  - name: "sim__restore_service_already_active"
+    tags: ["M7_service_restore"]
+    steps:
+      - goal: "I think my service is suspended and want to restore it, but I want to check if it's actually active first"
+        success_criteria: "The user is informed that their service is already active and does not need restoration"
+        response_guide: "Say 'I think my service is suspended, can you help me restore it?' Provide your account details. When told the service is currently active and fully functional, express relief"
+        max_turns: 10
+    expectations:
+      - "The agent checks the account status and informs the user that the service is already active"
+
+  - name: "sim__restore_service_business_account"
+    tags: ["M7_service_restore"]
+    steps:
+      - goal: "I want to restore the suspended service for my business account"
+        success_criteria: "The user is immediately routed to the business support queue with the verbatim business-handoff line"
+        response_guide: "Say 'My business internet is suspended and I need to restore it.' Provide your business account details when prompted"
+        max_turns: 10
+    expectations:
+      - "The user hears the business handoff disclosure and is transferred to a business agent without any self-serve restore attempt"
+
+  - name: "sim__sim_working_happy_path"
+    tags: ["M4_tech_support"]
+    steps:
+      - goal: "I want to get my new SIM card working because my phone currently says 'No Service'"
+        success_criteria: "The agent identifies the caller, authenticates them, diagnoses the SIM card status, and successfully activates the SIM card"
+        response_guide: "State that your new SIM card isn't working. Provide your phone number and verify your identity with the OTP code when prompted. Confirm that the phone now shows signal after the agent updates the status"
+        max_turns: 10
+    expectations:
+      - "The agent must authenticate the caller before modifying any SIM card settings"
+      - "The agent must confirm that the SIM card has been successfully activated"
+
+  - name: "sim__phone_locked_puk_code"
+    tags: ["M4_tech_support"]
+    steps:
+      - goal: "My phone is locked and asking for a PUK code, and I need to get it unlocked"
+        success_criteria: "The agent authenticates the user and provides the correct PUK code to unlock the phone"
+        response_guide: "Explain that your phone is locked and asking for a PUK code. Provide your account details and enter your 4-digit PIN via DTMF when asked. Write down the PUK code provided by the agent"
+        max_turns: 10
+    expectations:
+      - "The agent must provide the PUK code only after successful identity verification"
+      - "The agent must not speak the PIN back to the caller"
+
+  - name: "sim__damaged_sim_replacement"
+    tags: ["M4_tech_support"]
+    steps:
+      - goal: "My SIM card seems physically damaged after dropping my phone, and I need to get a replacement SIM"
+        success_criteria: "The agent processes a replacement SIM card order and provides the delivery details"
+        response_guide: "Say that your SIM card is damaged and you need a new one. Authenticate using the OTP sent to your backup contact number. Accept the order for a replacement SIM"
+        max_turns: 10
+    expectations:
+      - "The agent must place an order for a replacement SIM card"
+      - "The agent must state the order number and delivery ETA"
+
+  - name: "sim__carrier_unlock_request"
+    tags: ["M4_tech_support"]
+    steps:
+      - goal: "I want to unlock my phone so I can use it with a local SIM card while traveling abroad"
+        success_criteria: "The agent checks the device eligibility, authenticates the user, and processes the phone unlock request"
+        response_guide: "Say you want to unlock your phone for international travel. Provide your account details and authenticate. Confirm your device model when asked"
+        max_turns: 10
+    expectations:
+      - "The agent must verify eligibility and process the unlock request"
+      - "The agent must provide instructions or confirmation of the unlock"
+
+  - name: "sim__sim_issue_input_retry"
+    tags: ["M4_tech_support"]
+    steps:
+      - goal: "I need to fix my locked phone, but I am distracted during the call"
+        success_criteria: "The agent handles the user's silence gracefully using retry prompts, and eventually escalates to a live agent after repeated no-inputs"
+        response_guide: "Say 'My phone is locked.' When the agent asks for your phone or account number, remain silent. Remain silent again on the next prompt to test the retry-strike behavior"
+        max_turns: 10
+    expectations:
+      - "The agent must escalate to a live representative after 3 consecutive no-input events"
+      - "The agent must use the verbatim live agent handoff line"
+
+  - name: "sim__upgrade_mobile_plan_data"
+    tags: ["M5_plans_and_upgrades"]
+    steps:
+      - goal: "I want to upgrade my current mobile plan to one with more high-speed data"
+        success_criteria: "The agent presents 2-3 plan options, helps the user select one, and completes the plan upgrade"
+        response_guide: "Say 'I want to upgrade my plan.' Authenticate when prompted. Ask for options with more data. Choose the recommended mid-tier plan and confirm the change"
+        max_turns: 10
+    expectations:
+      - "The agent must present no more than 3 plan options"
+      - "The agent must successfully update the user's plan and confirm the new price"
+
+  - name: "sim__add_tv_service_existing"
+    tags: ["M5_plans_and_upgrades"]
+    steps:
+      - goal: "I want to add TV service to my existing home internet account"
+        success_criteria: "The agent checks service coverage, presents TV plan options, and places the order"
+        response_guide: "Say 'I would like to add TV service.' Provide your account number and authenticate. Choose the basic TV package when offered"
+        max_turns: 10
+    expectations:
+      - "The agent must check service coverage before presenting TV plans"
+      - "The agent must state the order number and delivery/activation ETA"
+
+  - name: "sim__upgrade_plan_business_handoff"
+    tags: ["M5_plans_and_upgrades"]
+    steps:
+      - goal: "I want to upgrade the mobile plans for my business account"
+        success_criteria: "The agent detects that the caller is a business account and immediately transfers them to a business specialist without attempting self-service"
+        response_guide: "Say 'I want to upgrade my business account plans.' Provide your business account number when asked"
+        max_turns: 10
+    expectations:
+      - "The agent must detect the business account and transfer immediately"
+      - "The agent must use the verbatim business handoff line"
+
+  - name: "sim__add_streaming_service_addon"
+    tags: ["M5_plans_and_upgrades"]
+    steps:
+      - goal: "I want to add a streaming service add-on to my current plan"
+        success_criteria: "The agent authenticates the user, presents the available streaming add-ons, and adds the selected service to the account"
+        response_guide: "Say 'I want to add a streaming service to my plan.' Authenticate when prompted. Select the streaming option and confirm the monthly charge"
+        max_turns: 10
+    expectations:
+      - "The agent must add the streaming service to the account and state the new monthly charge"
+
+  - name: "sim__upgrade_plan_after_hours"
+    tags: ["M5_plans_and_upgrades"]
+    steps:
+      - goal: "I want to upgrade my plan, but I am calling late at night after business hours"
+        success_criteria: "The agent recognizes that the sales queue is closed and schedules a next-business-day follow-up or handles it gracefully"
+        response_guide: "Say 'I want to upgrade my plan.' Authenticate when prompted. When the agent explains that the sales department is closed, agree"
+        max_turns: 10
+    expectations:
+      - "The agent must recognize that the sales queue is closed and schedule a next-business-day follow-up"
+
+  - name: "sim__warranty_claim_defective_battery"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "My phone's battery is swelling and won't hold a charge, and I want to file a warranty claim"
+        success_criteria: "The agent authenticates the user, verifies the warranty status, and processes the replacement claim"
+        response_guide: "Say 'My phone is defective and I need to file a warranty claim.' Authenticate when prompted. Describe the battery issue. Confirm you want a replacement shipped"
+        max_turns: 10
+    expectations:
+      - "The agent must verify that the device is in-warranty before processing the claim"
+      - "The agent must process the warranty claim and provide shipping details"
+
+  - name: "sim__warranty_claim_out_warranty"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "My phone's speaker stopped working, and I want to see if I can file a warranty claim"
+        success_criteria: "The agent checks the device status, determines it is out of warranty, and offers alternative repair options"
+        response_guide: "Say 'I need to file a warranty claim for my defective speaker.' Authenticate when prompted. When told the device is out of warranty, ask what your options are"
+        max_turns: 10
+    expectations:
+      - "The agent must correctly identify that the device is out of warranty"
+      - "The agent must offer alternative repair or upgrade options instead of a free replacement"
+
+  - name: "sim__warranty_claim_physical_damage_rejection"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "I dropped my phone and the screen cracked, and I want to file a warranty claim to get it fixed"
+        success_criteria: "The agent identifies that physical damage is not covered under the standard warranty and redirects the user to insurance or repair services"
+        response_guide: "Say 'I want to file a warranty claim for my broken screen.' Authenticate when prompted. Admit that you dropped the phone when asked how it happened"
+        max_turns: 10
+    expectations:
+      - "The agent must explain that physical damage is excluded from the warranty"
+      - "The agent must not process a warranty claim for physical damage"
+
+  - name: "sim__warranty_claim_fraud_pivot"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "I want to file a warranty claim, but during the call, I realize someone has accessed my account fraudulently"
+        success_criteria: "The agent immediately stops the warranty flow, expresses empathy, and escalates to the fraud department without attempting authentication"
+        response_guide: "Start by saying 'I need to file a warranty claim.' While the agent is looking up your account, say 'Wait, I see a charge here I didn't make, I think someone used my account fraudulently!'"
+        max_turns: 10
+    expectations:
+      - "The agent must immediately pivot to the fraud protocol without attempting authentication"
+      - "The agent must emit the verbatim empathy protocol and escalate with the correct fraud reason"
+
+  - name: "sim__transfer_number_happy_path"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "I want to transfer my existing phone number from my old carrier to Telco"
+        success_criteria: "The agent collects the necessary transfer details (old number, account number, and PIN) and initiates the port-in process"
+        response_guide: "Say 'I want to transfer my number from another carrier.' Provide your current phone number, your previous carrier's account number, and the transfer PIN when requested"
+        max_turns: 10
+    expectations:
+      - "The agent must initiate the number-transfer process"
+      - "The agent must provide a confirmation or tracking details for the transfer"
+
+  - name: "sim__transfer_number_missing_pin"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "I want to transfer my number, but I don't have my previous carrier's transfer PIN ready"
+        success_criteria: "The agent explains what information is needed, allows the user to find it, or offers to send an SMS with instructions on how to get the PIN"
+        response_guide: "Say 'I want to transfer my number in.' When asked for the transfer PIN, say 'I don't have the PIN on me right now.' Ask how you can find it or if they can text you instructions"
+        max_turns: 10
+    expectations:
+      - "The agent must handle the missing PIN gracefully by offering instructions or an SMS guide"
+
+  - name: "sim__transfer_number_business_block"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "I want to transfer my business phone number to Telco"
+        success_criteria: "The agent identifies the business intent or account type and transfers the caller to the business queue"
+        response_guide: "Say 'I want to transfer my business phone number from my old carrier.' Confirm that it is a business line when asked"
+        max_turns: 10
+    expectations:
+      - "The agent must detect the business context and transfer using the verbatim business handoff line"
+
+  - name: "sim__book_technician_appointment"
+    tags: ["M6_appointment_scheduling"]
+    steps:
+      - goal: "I want to book a technician visit because my internet is completely down and virtual troubleshooting didn't work"
+        success_criteria: "The agent looks up availability, offers 2-3 slots, commits the booking, and sends an SMS confirmation"
+        response_guide: "Say 'I need to book a technician appointment.' Authenticate when prompted. Choose the first available slot offered by the agent"
+        max_turns: 10
+    expectations:
+      - "The agent must offer 2-3 specific time slots"
+      - "The agent must send an SMS confirmation after committing the booking"
+
+  - name: "sim__reschedule_technician_appointment"
+    tags: ["M6_appointment_scheduling"]
+    steps:
+      - goal: "I need to reschedule my upcoming technician appointment to a different day"
+        success_criteria: "The agent finds the existing appointment, offers alternative slots, commits the reschedule, and sends an SMS confirmation"
+        response_guide: "Say 'I need to reschedule my technician appointment.' Authenticate when prompted. Choose a new slot from the options provided"
+        max_turns: 10
+    expectations:
+      - "The agent must look up the active appointment first"
+      - "The agent must confirm the new date and time back to the caller"
+
+  - name: "sim__cancel_appointment_same_day"
+    tags: ["M6_appointment_scheduling"]
+    steps:
+      - goal: "I need to cancel my technician appointment that is scheduled for later today"
+        success_criteria: "The agent warns the user about the same-day cancellation policy, asks for double confirmation, and cancels the appointment"
+        response_guide: "Say 'I need to cancel my appointment today.' Authenticate when prompted. Confirm twice when the agent warns you that it cannot be undone once canceled"
+        max_turns: 10
+    expectations:
+      - "The agent must require double confirmation for same-day cancellations"
+      - "The agent must successfully cancel the appointment and send an SMS confirmation"
+
+  - name: "sim__cancel_appointment_en_route"
+    tags: ["M6_appointment_scheduling"]
+    steps:
+      - goal: "I want to cancel my appointment, but the technician is already on their way"
+        success_criteria: "The agent explains that the appointment cannot be canceled because the technician is en-route, and offers to leave a note instead"
+        response_guide: "Say 'I want to cancel my technician visit.' Authenticate when prompted. When told the technician is already en-route and cannot cancel, ask the agent to leave a note to leave the package at the door"
+        max_turns: 10
+    expectations:
+      - "The agent must politely explain that cancellation is impossible because the technician is en-route"
+      - "The agent must offer to leave a note for the technician"
+
+  - name: "sim__appointment_availability_sms_callback"
+    tags: ["M6_appointment_scheduling"]
+    steps:
+      - goal: "I want to book an appointment for this Saturday, but there are no slots available"
+        success_criteria: "The agent checks availability, finds no slots for the requested window, and offers an SMS when a slot opens up"
+        response_guide: "Say 'I need to book a technician for this Saturday.' Authenticate when prompted. When told there is no availability, accept the offer for an SMS"
+        max_turns: 10
+    expectations:
+      - "The agent must offer an SMS when no slots are available in the requested window"
+      - "The agent must successfully register request"
+
+  - name: "sim__dispute_charge_my_bill"
+    tags: ["M3_billing_and_payment"]
+    steps:
+      - goal: "Dispute a charge on my bill"
+        success_criteria: "The agent accomplishes: dispute a charge on my bill."
+        response_guide: "Play a user who needs to dispute a charge on my bill. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: dispute a charge on my bill."
+
+  - name: "sim__pay_my_bill"
+    tags: ["M3_billing_and_payment"]
+    steps:
+      - goal: "Pay my bill"
+        success_criteria: "The agent accomplishes: pay my bill."
+        response_guide: "Play a user who needs to pay my bill. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: pay my bill."
+
+  - name: "sim__set_up_autopay"
+    tags: ["M3_billing_and_payment"]
+    steps:
+      - goal: "Set up autopay"
+        success_criteria: "The agent accomplishes: set up autopay."
+        response_guide: "Play a user who needs to set up autopay. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: set up autopay."
+
+  - name: "sim__request_refund_credit"
+    tags: ["M3_billing_and_payment"]
+    steps:
+      - goal: "Request a refund or credit"
+        success_criteria: "The agent accomplishes: request a refund or credit."
+        response_guide: "Play a user who needs to request a refund or credit. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: request a refund or credit."
+
+  - name: "sim__troubleshoot_internet_tv_phone_service_issues"
+    tags: ["M4_tech_support"]
+    steps:
+      - goal: "Troubleshoot internet, TV, or phone service issues"
+        success_criteria: "The agent accomplishes: troubleshoot internet, TV, or phone service issues."
+        response_guide: "Play a user who needs to troubleshoot internet, TV, or phone service issues. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: troubleshoot internet, TV, or phone service issues."
+
+  - name: "sim__resolve_sim_card_locked_phone_issues"
+    tags: ["M4_tech_support"]
+    steps:
+      - goal: "Resolve SIM card or locked phone issues"
+        success_criteria: "The agent accomplishes: resolve SIM card or locked phone issues."
+        response_guide: "Play a user who needs to resolve SIM card or locked phone issues. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: resolve SIM card or locked phone issues."
+
+  - name: "sim__upgrade_my_plan_add_new_services"
+    tags: ["M5_plans_and_upgrades"]
+    steps:
+      - goal: "Upgrade my plan or add new services"
+        success_criteria: "The agent accomplishes: upgrade my plan or add new services."
+        response_guide: "Play a user who needs to upgrade my plan or add new services. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: upgrade my plan or add new services."
+
+  - name: "sim__file_warranty_claim_defective_device"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "File a warranty claim for a defective device"
+        success_criteria: "The agent accomplishes: file a warranty claim for a defective device."
+        response_guide: "Play a user who needs to file a warranty claim for a defective device. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: file a warranty claim for a defective device."
+
+  - name: "sim__transfer_my_phone_number_another_carrier"
+    tags: ["M5_warranty_and_transfers"]
+    steps:
+      - goal: "Transfer my phone number from another carrier"
+        success_criteria: "The agent accomplishes: transfer my phone number from another carrier."
+        response_guide: "Play a user who needs to transfer my phone number from another carrier. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: transfer my phone number from another carrier."
+
+  - name: "sim__book_reschedule_cancel_technician_appointment"
+    tags: ["M6_appointment_scheduling"]
+    steps:
+      - goal: "Book, reschedule, or cancel a technician appointment"
+        success_criteria: "The agent accomplishes: book, reschedule, or cancel a technician appointment."
+        response_guide: "Play a user who needs to book, reschedule, or cancel a technician appointment. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: book, reschedule, or cancel a technician appointment."
+
+  - name: "sim__check_status_technician_visit_ticket"
+    tags: ["M6_status_and_tickets"]
+    steps:
+      - goal: "Check the status of a technician visit or support ticket"
+        success_criteria: "The agent accomplishes: check the status of a technician visit or support ticket."
+        response_guide: "Play a user who needs to check the status of a technician visit or support ticket. Provide details the agent asks for and pursue it until resolved."
+        max_turns: 10
+    expectations:
+      - "The agent addresses the user's goal: check the status of a technician visit or support ticket."
